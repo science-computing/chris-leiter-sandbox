@@ -39,7 +39,7 @@ jobs:
           # execute pre-commands before scp
           # first_ssh: # optional
           # scp from local to remote
-          scp: |
+          scp: |-
             ./discipline* => /home/ec2-user/
           # execute post-commands after scp
           # last_ssh: # optional
