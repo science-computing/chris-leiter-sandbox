@@ -1,0 +1,45 @@
+# This is a basic workflow to deploy all discipline directories
+# to a server via ssh/scp
+
+name: deploy-all-disciplines
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push for the "main" branch
+  # hier muss noch der "main" branch von einem direkten commit geschützt werden
+  # https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule
+  push:
+    branches: [ "main" ]
+
+# Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Run the ssh-scp-ssh action
+      - name: ssh-scp-ssh-pipelines
+        # You may pin to the exact commit or the version.
+        # uses: cross-the-world/ssh-scp-ssh-pipelines@78e864b4890087a58248ff39320406971ca88b89
+        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+        with:
+          # ssh remote host
+          host: ${{ secrets.DEPLOY_HOST }}
+          user: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.PRIVATE_KEY_PEM }}
+          # execute pre-commands before scp
+          # first_ssh: # optional
+          # scp from local to remote
+          scp: |
+            ./discipline* => /home/ec2-user/
+          # execute post-commands after scp
+          # last_ssh: # optional
