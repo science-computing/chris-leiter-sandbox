@@ -33,20 +33,13 @@ jobs:
         uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
         with:
           # ssh remote host
-          host: 
-          # ssh remote port
-          port: # optional, default is 22
-          # ssh remote user
-          user: 
-          # content of ssh private key. ex raw content of ~/.ssh/id_rsa
-          key: # optional
-          # ssh remote password
-          pass: # optional
-          # connection timeout to remote host
-          connect_timeout: # optional, default is 30s
+          host: ${{ secrets.DEPLOY_HOST }}
+          user: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.PRIVATE_KEY_PEM }}
           # execute pre-commands before scp
-          first_ssh: # optional
+          # first_ssh: # optional
           # scp from local to remote
-          scp: # optional
+          scp: |
+            ./discipline* => /home/ec2-user/
           # execute post-commands after scp
-          last_ssh: # optional
+          # last_ssh: # optional
