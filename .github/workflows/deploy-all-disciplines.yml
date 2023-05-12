@@ -22,10 +22,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       - name: upload to server
-        uses: moonpathbg/scp_uploader@latest
+        uses: appleboy/scp-action@latest
         with:
           host: ${{ secrets.DEPLOY_HOST }}
-          user: ${{ secrets.DEPLOY_USER }}
+          username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           port: ${{ secrets.DEPLOY_PORT }}
           source: "./discipline*"
