@@ -18,6 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   deploy:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
