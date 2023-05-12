@@ -24,26 +24,28 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - run: echo "this should scp to ${{ vars.DEPLOY_HOST }}"
-      - run: echo "this should use user ${{ vars.DEPLOY_USER }}"
-      
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      #- uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      
+      - name: Show Repo
+        run: |
+          ls ${{ github.workspace }}
 
       # Run the ssh-scp-ssh action
-      #- name: scp pipelines
-      #  uses: cross-the-world/ssh-scp-ssh-pipelines@latest
-      #  env:
-      #    WELCOME: "scp pipelines"
-      #  with:
+      - name: scp pipelines
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        env:
+          WELCOME: "scp pipelines"
+        with:
           # ssh remote host
-      #    host: ${{ secrets.DEPLOY_HOST }}
-      #    user: ${{ secrets.DEPLOY_USER }}
-      #    key: ${{ secrets.PRIVATE_KEY_PEM }}
+          host: ${{ secrets.DEPLOY_HOST }}
+          user: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.PRIVATE_KEY_PEM }}
           # execute pre-commands before scp
           # first_ssh: # optional
           # scp from local to remote
-      #    scp: |-
-      #      ./discipline* => /home/ec2-user/
+          scp: |-
+            ./discipline* => /home/ec2-user/
           # execute post-commands after scp
           # last_ssh: # optional
