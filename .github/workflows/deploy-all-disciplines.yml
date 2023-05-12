@@ -43,5 +43,5 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           port: ${{ secrets.DEPLOY_PORT }}
-          source: "./discipline*"
+          source: ${{ steps.changed-files.outputs.all_changed_files }}
           target: "~/"
