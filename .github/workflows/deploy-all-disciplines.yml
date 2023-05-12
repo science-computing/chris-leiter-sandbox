@@ -26,7 +26,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
          since_last_remote_commit: true
-         files: "~/discipline*"
+         files: "discipline*"
          separator: ","
          
       - name: upload to server
