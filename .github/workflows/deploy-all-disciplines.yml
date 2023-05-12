@@ -31,12 +31,12 @@ jobs:
          separator: ","
          
       - name: Anything changed
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
           
       - name: Upload to server
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_HOST }}
