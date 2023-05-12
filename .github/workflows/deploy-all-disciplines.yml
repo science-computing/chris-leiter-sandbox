@@ -21,7 +21,16 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+         since_last_remote_commit: true
+         files: "disciplines*"
+         separator: ","
+         
       - name: upload to server
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_HOST }}
