@@ -1,6 +1,6 @@
 Responsible persons for DISCIPLINE1
 
-#The lines must be formatted as follows
+#The lines must be formatted as follows<br>
 #First Name;Name;Department;Q-ID;Mailaddress
 
 #Comments have to be added after a leading "#"
