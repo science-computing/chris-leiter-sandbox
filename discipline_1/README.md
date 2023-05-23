@@ -1,10 +1,11 @@
-Responsible persons for DISCIPLINE1<br>
+# Responsible persons for DISCIPLINE1<br>
 
-# The lines must be formatted as follows and need HTML line break \<br\><br>
-# for breaking lines<br>
-# First Name;Name;Department;Q-ID;Mailaddress<br>
+#The lines must be formatted as follows and need HTML line break \<br\> <br>
+#for breaking lines<br>
 <br>
-# Comments have to be added after a leading "#"<br>
+#First Name;Name;Department;Q-ID;Mailaddress<br>
+<br>
+#Comments have to be added after a leading "#"<br>
 <br>
 Christoph;Leiter;FG-835;QXS7490;christoph.cl.leiter@partner.bmw.de<br>
 Max;Mustermann;FG-456;Q123456;max.mustermann@bmw.de<br>
