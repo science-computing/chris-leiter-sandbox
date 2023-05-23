@@ -1,5 +1,5 @@
-Responsible persons for DISCIPLINE1
-
+Responsible persons for DISCIPLINE1<br>
+<br>
 # The lines must be formatted as follows and need HTML line break \<br\><br>
 # for breaking lines<br>
 # First Name;Name;Department;Q-ID;Mailaddress<br>
