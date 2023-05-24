@@ -22,7 +22,7 @@ jobs:
       
       # First of all we check whether the README.md is correct
       - name: Check README.md
-        uses: applebay/ssh-action@v.0.1.10
+        uses: appleboy/ssh-action@v.0.1.10
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
