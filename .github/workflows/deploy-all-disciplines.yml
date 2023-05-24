@@ -1,13 +1,11 @@
 # This is a basic workflow to deploy all discipline directories
-# to a server via ssh/scp
+# to a server via scp
 
 name: deploy-all-disciplines
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push for the "main" branch
-  # hier muss noch der "main" branch von einem direkten commit geschützt werden
-  # https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule
   push:
     branches: [ "main" ]
 
@@ -15,14 +13,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  # This workflow contains a single job called "build"
   deploy:
     runs-on: ubuntu-latest
     environment: productive
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it
       - uses: actions/checkout@v3
       
+      # First of all we check whether the README.md is correct
+      - name: Check README.md
+        uses: applebay/ssh-action@v.0.1.10
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.PRIVATE_KEY_PEM }}
+          script: /home/ec2-user/bin/test_readme.sh
+          
+        
+      
+      # Rerieve all files which have been chantged since last commit
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v35
@@ -31,11 +40,13 @@ jobs:
          files: "discipline*"
          separator: ","
          
-      - name: Anything changed
+      # Print all changed files
+      - name: Print anything that changed
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
           
+      # Upload the changed files to the server
       - name: Upload to server
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: appleboy/scp-action@v0.1.4
