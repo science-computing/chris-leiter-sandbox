@@ -13,7 +13,46 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  deployInt:
+    name: Deploy to Integration
+    runs-on: ubuntu-latest
+    environment: productive
+    steps:
+      # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it
+      - uses: actions/checkout@v3
+      
+      # In INT we don't check the README.md
+      
+      # Rerieve all files which have been chantged since last commit
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+         since_last_remote_commit: true
+         files: "discipline*"
+         separator: ","
+         
+      # Print all changed files
+      - name: Print anything that changed
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
+          
+      # Upload the changed files to the server
+      - name: Upload to server
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.PRIVATE_KEY_PEM }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          source: ${{ steps.changed-files.outputs.all_changed_files }}
+          target: "~/"
+
+jobs:
+  deployProd:
+    name: Deploy to Production
     runs-on: ubuntu-latest
     environment: productive
     steps:
@@ -28,9 +67,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           script: /home/ec2-user/bin/test_readme.sh
-          
-        
-      
+       
       # Rerieve all files which have been chantged since last commit
       - name: Get changed files
         id: changed-files
