@@ -50,7 +50,6 @@ jobs:
           source: ${{ steps.changed-files.outputs.all_changed_files }}
           target: "~/"
 
-jobs:
   deployProd:
     name: Deploy to Production
     runs-on: ubuntu-latest
