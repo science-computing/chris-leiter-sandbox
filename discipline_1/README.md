@@ -5,7 +5,8 @@
 <br>
 #First Name;Name;Department;Q-ID;Mailaddress<br>
 <br>
-#Comments have to be added after a leading "#"<br>
+#Comments have to be added after a leading "#"
+#add a new comment<br>
 <br>
 Christoph;Leiter;FG-835;QXS7490;christoph.cl.leiter@partner.bmw.de<br>
 Max;Mustermann;FG-456;Q123456;max.mustermann@bmw.de<br>
