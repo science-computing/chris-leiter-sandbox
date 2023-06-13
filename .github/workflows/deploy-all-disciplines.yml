@@ -48,7 +48,6 @@ jobs:
           source: ${{ steps.changed-files.outputs.all_changed_files }}
           target: "~/"
 
-          
       # Chmod of test script to 555
       - name: Chmod test_readme.sh
         uses: appleboy/ssh-action@v0.1.10
@@ -70,7 +69,7 @@ jobs:
 
       # Remove new files in case errors in README.md
       - name: Cleanup in case of faulty README.md
-        if: steps.check_readme.outcome != 'success'
+        if: steps.check_readme.outcome == 'failure'
         uses: appleboy/ssh-action@v0.1.10
         with:
             host: ${{ secrets.DEPLOY_HOST }}
