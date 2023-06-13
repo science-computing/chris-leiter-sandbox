@@ -28,7 +28,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
          since_last_remote_commit: true
-         files: "*"
+         files: "discipline_*"
          separator: ","
          
       # Print all changed files
