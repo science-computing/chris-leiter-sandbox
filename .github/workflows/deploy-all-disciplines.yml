@@ -48,14 +48,6 @@ jobs:
           source: ${{ steps.changed-files.outputs.all_changed_files }}
           target: "~/"
 
-      # Check whether the README.md is correct
-      - name: Check README.md
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.PRIVATE_KEY_PEM }}
-          script: /home/ec2-user/bin/test_readme.sh
           
       # Chmod of test script to 555
       - name: Chmod test_readme.sh
@@ -65,3 +57,23 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           script: chmod 555 /home/ec2-user/bin/test_readme.sh
+
+      # Check whether the README.md is correct
+      - name: Check README.md
+        id: check_readme
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.PRIVATE_KEY_PEM }}
+          script: /home/ec2-user/bin/test_readme.sh
+
+      # Remove new files in case errors in README.md
+      - name: Cleanup in case of faulty README.md
+        if: steps.check_readme.outcome != 'success'
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+            host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.PRIVATE_KEY_PEM }}
+          script: rm ${{ steps.changed-files.outputs.all_changed_files }}
