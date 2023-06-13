@@ -17,11 +17,11 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     environment: productive
+    continue-on-error: true
     steps:
-      continue-on-error: true
       # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it
-        - name: Checkout Repo
-          uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
       
       # Rerieve all files which have been changed since last commit
       - name: Get changed files
