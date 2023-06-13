@@ -16,7 +16,7 @@ jobs:
   deployProd:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    continue-on-error: true
+    jobs.deployProd.steps[*].continue-on-error: true
     environment: productive
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it
@@ -68,12 +68,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           script: /home/ec2-user/bin/test_readme.sh
 
-  # Remove new files in case errors in README.md
-  CleanProd:
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    environment: productive
-    steps:
+      # Cleanup in case of faulty README
       - name: Cleanup in case of faulty README.md
         uses: appleboy/ssh-action@v0.1.10
         if: steps.check_readme.outcome == 'failure'
