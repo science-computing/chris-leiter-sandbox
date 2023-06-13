@@ -80,6 +80,6 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           script: |
             a=`echo ${{ steps.changed-files.outputs.all_changed_files }} | tr "," " "`
-            if [ $a != "" ]; then
+            if [ "x$a" != "x" ]; then
               rm $a
             fi
