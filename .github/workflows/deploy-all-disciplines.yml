@@ -79,5 +79,5 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           script: |
-            a=`echo ${{ steps.changed-files.outputs.all_changed_files }} | tr "," " "
+            a=`echo ${{ steps.changed-files.outputs.all_changed_files }} | tr "," " "`
             rm $a
