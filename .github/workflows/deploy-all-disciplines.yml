@@ -72,7 +72,7 @@ jobs:
         if: steps.check_readme.outcome == 'failure'
         uses: appleboy/ssh-action@v0.1.10
         with:
-            host: ${{ secrets.DEPLOY_HOST }}
+          host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           script: rm ${{ steps.changed-files.outputs.all_changed_files }}
