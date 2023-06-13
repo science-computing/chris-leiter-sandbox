@@ -78,7 +78,7 @@ jobs:
       - name: Check README.md
         id: check_readme
         uses: appleboy/ssh-action@v0.1.10
-        continue-on-error: true
+        continue-on-error: false
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
@@ -86,9 +86,8 @@ jobs:
           script: /home/ec2-user/bin/test_readme.sh
 
       # Upload complete discipline to the server
-      - name: Upload README.md to server
+      - name: Upload discipline to server
         uses: appleboy/scp-action@v0.1.4
-        if: steps.check_readme.outcome == 'success'
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
