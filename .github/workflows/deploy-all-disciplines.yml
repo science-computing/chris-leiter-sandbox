@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: productive
     steps:
-        continue-on-error: true
+      continue-on-error: true
       # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it
       - name: Checkout Repo
         uses: actions/checkout@v3
