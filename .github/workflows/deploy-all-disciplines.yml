@@ -17,7 +17,6 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     environment: productive
-    continue-on-error: true
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it
       - name: Checkout Repo
@@ -63,6 +62,7 @@ jobs:
       - name: Check README.md
         id: check_readme
         uses: appleboy/ssh-action@v0.1.10
+        continue-on-error: true
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
