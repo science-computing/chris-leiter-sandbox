@@ -23,19 +23,19 @@ jobs:
         uses: actions/checkout@v3
       
       # Rerieve all files which have been changed since last commit
-      #- name: Get changed files
-      #  id: changed-files
-      #  uses: tj-actions/changed-files@v35
-      #  with:
-      #   since_last_remote_commit: true
-      #   files: "discipline_*"
-      #   separator: ","
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+         since_last_remote_commit: true
+         files: "discipline_*"
+         separator: ","
          
       # Print all changed files
-      #- name: Print anything that changed
-      #  if: steps.changed-files.outputs.any_changed == 'true'
-      #  run: |
-      #    echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
+      - name: Print anything that changed
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
           
       # Upload the changed files to the server
       - name: Upload to server
@@ -78,4 +78,6 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
-          script: rm ${{ steps.changed-files.outputs.all_changed_files }}
+          script: |
+            a=`echo ${{ steps.changed-files.outputs.all_changed_files }} | tr "," " "
+            rm $a
