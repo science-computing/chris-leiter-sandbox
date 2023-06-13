@@ -46,7 +46,8 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
           port: ${{ secrets.DEPLOY_PORT }}
-          source: ${{ steps.changed-files.outputs.all_changed_files }}
+          #source: ${{ steps.changed-files.outputs.all_changed_files }}
+          source: "discipline_1/*"
           target: "~/"
 
       # Chmod of test script to 555
@@ -77,4 +78,8 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.PRIVATE_KEY_PEM }}
-          script: rm ${{ steps.changed-files.outputs.all_changed_files }}
+          script: |
+            a=`echo ${{ steps.changed-files.outputs.all_changed_files }} | tr "," " "`
+            if [ "x$a" != "x" ]; then
+              rm $a
+            fi
